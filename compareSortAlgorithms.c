@@ -1,6 +1,7 @@
 #include <time.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 
 int extraMemoryAllocated;
 
@@ -28,45 +29,45 @@ size_t Size(void* ptr)
 
 // implements heap sort
 // extraMemoryAllocated counts bytes of memory allocated
-void heapify(int arr[], int n, int i) {
+void heapify(int pData[], int n, int i) {
     int largest = i;  // Initialize largest as root
     int l = 2 * i + 1;  // Left child
     int r = 2 * i + 2;  // Right child
 
-    // If left child is larger than root
-    if (l < n && arr[l] > arr[largest])
+    // If left child is within bounds and larger than root
+    if (l < n && pData[l] > pData[largest])
         largest = l;
 
-    // If right child is larger than largest so far
-    if (r < n && arr[r] > arr[largest])
+    // If right child is within bounds and larger than largest so far
+    if (r < n && pData[r] > pData[largest])
         largest = r;
 
     // If largest is not root
     if (largest != i) {
-        int temp = arr[i];
-        arr[i] = arr[largest];
-        arr[largest] = temp;
+        int temp = pData[i];
+        pData[i] = pData[largest];
+        pData[largest] = temp;
 
         // Recursively heapify the affected sub-tree
-        heapify(arr, n, largest);
+        heapify(pData, n, largest);
     }
 }
 
 // Main function to do heap sort
-void heapSort(int arr[], int n) {
+void heapSort(int pData[], int n) {
     // Build heap (rearrange array)
     for (int i = n / 2 - 1; i >= 0; i--)
-        heapify(arr, n, i);
+        heapify(pData, n, i);
 
     // One by one extract an element from heap
     for (int i = n - 1; i > 0; i--) {
         // Move current root to end
-        int temp = arr[0];
-        arr[0] = arr[i];
-        arr[i] = temp;
+        int temp = pData[0];
+        pData[0] = pData[i];
+        pData[i] = temp;
 
         // Call heapify on the reduced heap
-        heapify(arr, i, 0);
+        heapify(pData, i, 0);
     }
 }
 
@@ -304,4 +305,3 @@ int main(void)
 	}
 	
 }
-
